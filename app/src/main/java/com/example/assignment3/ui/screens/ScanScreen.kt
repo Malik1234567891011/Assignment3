@@ -27,6 +27,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.assignment3.model.MenuItem
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Restaurant
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.ui.text.input.KeyboardType
 
 
@@ -52,53 +57,76 @@ fun ScanScreen(
             .fillMaxSize()
             .imePadding()
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(12.dp)
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ){
-        Text("Add Food Entry", style = MaterialTheme.typography.headlineSmall)
+        Text(
+            "Add Food Entry",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary)
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+            shape = MaterialTheme.shapes.extraLarge
 
-        OutlinedTextField(
-            value= restaurant, onValueChange = {restaurant = it},
-            label = {Text("Restaurant")},
-            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
 
-        )
-        OutlinedTextField(
-            value = itemName, onValueChange = { itemName = it },
-            label = { Text("Dish name") }, modifier = Modifier.fillMaxWidth()
-        )
-
-        OutlinedTextField(
-            value = imageUrl, onValueChange = {imageUrl = it},
-            label = {Text("Image URL(https)")},
-            modifier = Modifier.fillMaxWidth(), singleLine = true
-
-        )
-        OutlinedTextField(
-            value = notes, onValueChange = { notes = it },
-            label = { Text("Notes (optional)") }, modifier = Modifier.fillMaxWidth()
-        )
-        if(imageUrl.isNotBlank()){
-            AsyncImage(
-                model=imageUrl,
-                contentDescription = "Preview",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            )
-        }
-
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ){
-            allTags.forEach { tag ->
-                FilterChip(
-                    selected= tag in selected,
-                    onClick = {toggle(tag)},
-                    label = {Text(tag)}
+                Text("Basic Info", style = MaterialTheme.typography.titleSmall)
+                OutlinedTextField(
+                    value = restaurant,
+                    onValueChange = { restaurant = it },
+                    label = { Text("Restaurant") },
+                    leadingIcon = { Icon(Icons.Outlined.Restaurant, contentDescription = null) },
+                    placeholder = { Text("e.g. Talibs’s Pumpkins Factory") },
+                    modifier = Modifier.fillMaxWidth()
                 )
+                OutlinedTextField(
+                    value = itemName, onValueChange = { itemName = it },
+                    label = { Text("Dish name") }, modifier = Modifier.fillMaxWidth()
+                )
+                Text("Add Image", style = MaterialTheme.typography.titleSmall)
 
+                OutlinedTextField(
+                    value = imageUrl, onValueChange = { imageUrl = it },
+                    label = { Text("Image URL(https)") },
+                    modifier = Modifier.fillMaxWidth(), singleLine = true
+
+                )
+                OutlinedTextField(
+                    value = notes,
+                    onValueChange = { notes = it },
+                    label = { Text("Notes (optional)") },
+                    placeholder = { Text("e.g. Best lasagna I’ve ever had!") },
+                    modifier = Modifier.fillMaxWidth(),
+                    minLines = 3,
+                    maxLines = 5
+                )
+                if (imageUrl.isNotBlank()) {
+                    AsyncImage(
+                        model = imageUrl,
+                        contentDescription = "Preview",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                    )
+                }
+
+                Text("Tags", style = MaterialTheme.typography.titleSmall)
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    allTags.forEach { tag ->
+                        FilterChip(
+                            selected = tag in selected,
+                            onClick = { toggle(tag) },
+                            label = { Text(tag) }
+                        )
+
+                    }
+                }
             }
         }
 
