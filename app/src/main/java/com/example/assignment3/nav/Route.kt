@@ -11,11 +11,11 @@ import androidx.compose.material.icons.outlined.List
 
 sealed class    Route(val route: String, val label: String, val icon: ImageVector?){
     data object Scan    : Route("scan", "Scan", Icons.Outlined.CameraAlt)
-    data object History : Route(route="scan","Scan", Icons.AutoMirrored.Outlined.List)
+    data object History : Route(route="history","History", Icons.AutoMirrored.Outlined.List)
     data object About : Route(route="about","About",Icons.Outlined.Info)
 
-    data object Detail : Route("detail?payload={payload}","Detail",null){
-        fun withPayload(encoded: String)= "detail?payload=$encoded"
+    data object Detail : Route("detail/{id}","Detail",null){
+        fun withId(id: String)= "detail/$id"
     }
 
 }
