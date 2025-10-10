@@ -50,8 +50,9 @@ fun ScanScreen(
         Text("Add Food Entry", style = MaterialTheme.typography.headlineSmall)
 
         OutlinedTextField(
-            value= restaurant, onValueChange = {itemName = it},
-            label = {Text("Dish name")}, modifier = Modifier.fillMaxWidth()
+            value= restaurant, onValueChange = {restaurant = it},
+            label = {Text("Restaurant")},
+            modifier = Modifier.fillMaxWidth()
 
         )
         OutlinedTextField(
